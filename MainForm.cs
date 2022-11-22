@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Accord.Video.DirectShow;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,11 +15,22 @@ namespace x64AccordTestApp
     {
         //视频播放器控件
         VideoPlayer videoPlayer = null;
-
+        Panel snapShotPanel = null;
         public MainForm()
         {
             InitializeComponent();
             InitVideoPlayer();
+            InitPicturePanel();
+        }
+
+        private void InitPicturePanel()
+        {
+            snapShotPanel = new Panel();
+            snapShotPanel.Location = new Point(660, 10);
+            snapShotPanel.Size = new Size(640, 360);
+            snapShotPanel.BorderStyle = BorderStyle.FixedSingle;
+            snapShotPanel.Show();
+            this.Controls.Add(snapShotPanel);
         }
 
         private void InitVideoPlayer()
@@ -32,13 +44,16 @@ namespace x64AccordTestApp
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            //videoPlayer.PlayVideo("HP TrueVision HD Camera");
-            videoPlayer.PlayVideo("Microsoft® LifeCam HD-3000");
+            string cameraStr = EnumerateVideoDevices();
+            //list all the camera devices
+            videoPlayer.PlayVideo(cameraStr);
+            //videoPlayer.PlayVideo("Microsoft® LifeCam HD-3000");
         }
 
         private void btnTakePicture_Click(object sender, EventArgs e)
         {
-
+            Bitmap frame = TakeSnapshot("D:/test.jpg", false);
+            snapShotPanel.BackgroundImage = frame;
         }
 
         private void btnRecord_Click(object sender, EventArgs e)
@@ -63,5 +78,39 @@ namespace x64AccordTestApp
                 btnRecord.Text = "录制视频";
             }
         }
+
+
+        /// <summary>
+        /// 枚举视频设备
+        /// </summary>
+        /// <returns></returns>
+        public string EnumerateVideoDevices()
+        {
+            var videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice); // 筛选视频输入设备
+
+            foreach (var videoDevice in videoDevices)
+            {
+                string FriendlyName = videoDevice.Name; // 设备的友好名称
+                string MonikerName = videoDevice.MonikerString; // 设备的唯一标识符，用于区分哪个设备
+                return FriendlyName;
+            }
+            return "";
+        }
+
+        public Bitmap TakeSnapshot(string file, bool isNeedReturenSnapshot)
+        {
+            Bitmap singleFrame = videoPlayer.GetCurrentVideoFrame();
+            if (singleFrame == null)
+            {
+                MessageBox.Show("请检查摄像头是否连接正常!");
+                return null;
+            }
+            singleFrame.Save(file, System.Drawing.Imaging.ImageFormat.Jpeg);
+            if (isNeedReturenSnapshot)
+                return singleFrame;
+            else
+                return null;
+        }
+
     }
 }

@@ -72,6 +72,8 @@ namespace x64AccordTestApp
         //打开本地的设备, MJPEG, 本地文件夹
         public bool PlayVideo(string inputStr)
         {
+            if (inputStr == "")
+                return false;
             inputString = inputStr;
             //vt = CheckVideoType(inputStr);
             vt = VideoType.LOCAL_DEVICE;
