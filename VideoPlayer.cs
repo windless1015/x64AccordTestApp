@@ -13,6 +13,33 @@ using Accord.Video.DirectShow;
 using Accord.Video.FFMPEG;
 using System.Threading;
 
+
+/*
+ Webcam Name:	Microsoft® LifeCam HD-3000
+Quality Rating:	1103
+Built-in Microphone:	audioinput#0
+Built-in Speaker:	
+Frame rate:	30 FPS
+Stream Type:	video
+Image Mode:	rgb
+Webcam MegaPixels:	0.92 MP
+Webcam Resolution:	1280×720
+Video Standard:	HD
+Aspect Ratio:	1.78
+PNG File Size:	1.39 MB
+JPEG File Size:	725.38 kB
+Bitrate:	21.25 MB/s
+Number of Colors:	216789
+Average RGB Color:	
+ 
+Lightness:	53.92%
+Luminosity:	53.85%
+Brightness:	53.73%
+Hue:	23°
+Saturation:	5.53%
+
+ */
+
 namespace x64AccordTestApp
 {
     public enum VideoType
@@ -59,9 +86,13 @@ namespace x64AccordTestApp
                     frameSize = new Size(400, 400);
                     curVideoSourceType = 2; //牙周
                 }
-                else
+                else if (inputStr == "BV Dental Camera")
                 {
                     curVideoSourceType = 1; //usb
+                    frameSize = new Size(640, 360);
+                }
+                else if (inputStr == "Microsoft® LifeCam HD-3000") //https://webcamtests.com/
+                {
                     frameSize = new Size(640, 360);
                 }
                 isPlaying = true;

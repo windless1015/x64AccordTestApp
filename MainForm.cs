@@ -32,8 +32,8 @@ namespace x64AccordTestApp
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            videoPlayer.PlayVideo("HP TrueVision HD Camera");
-            
+            //videoPlayer.PlayVideo("HP TrueVision HD Camera");
+            videoPlayer.PlayVideo("Microsoft® LifeCam HD-3000");
         }
 
         private void btnTakePicture_Click(object sender, EventArgs e)
