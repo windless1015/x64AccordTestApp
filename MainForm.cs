@@ -52,7 +52,7 @@ namespace x64AccordTestApp
 
         private void btnTakePicture_Click(object sender, EventArgs e)
         {
-            Bitmap frame = TakeSnapshot("D:/test.jpg", false);
+            Bitmap frame = videoPlayer.TakeSnapshot("", true);
             snapShotPanel.BackgroundImage = frame;
         }
 
@@ -95,21 +95,6 @@ namespace x64AccordTestApp
                 return FriendlyName;
             }
             return "";
-        }
-
-        public Bitmap TakeSnapshot(string file, bool isNeedReturenSnapshot)
-        {
-            Bitmap singleFrame = videoPlayer.GetCurrentVideoFrame();
-            if (singleFrame == null)
-            {
-                MessageBox.Show("请检查摄像头是否连接正常!");
-                return null;
-            }
-            singleFrame.Save(file, System.Drawing.Imaging.ImageFormat.Jpeg);
-            if (isNeedReturenSnapshot)
-                return singleFrame;
-            else
-                return null;
         }
 
     }

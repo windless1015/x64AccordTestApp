@@ -144,7 +144,8 @@ namespace x64AccordTestApp
                 MessageBox.Show("请检查摄像头是否连接正常!");
                 return null;
             }
-            singleFrame.Save(file, System.Drawing.Imaging.ImageFormat.Jpeg);
+            if(file != "")
+                singleFrame.Save(file, System.Drawing.Imaging.ImageFormat.Jpeg);
             if (isNeedReturenSnapshot)
                 return singleFrame;
             else
