@@ -51,9 +51,12 @@ namespace x64AccordTestApp
     }
     public partial class VideoPlayer : VideoSourcePlayer
     {
+        CircularBuffer<Bitmap> buffer = new CircularBuffer<Bitmap>(30);
+
         int curVideoSourceType = 0; //0表示无效, 1表示usb, 2表示牙周
         public bool isStopped = false; //是否已经停止
         public bool isRecording = false; //是否在录制
+        public bool isCaching = false; //是否缓存
         public bool isPlaying = false; //是否正在播放
         private VideoFileWriter aviWriter = null;
         private DateTime? _firstFrameTime = null;
@@ -62,6 +65,7 @@ namespace x64AccordTestApp
         private string inputString = null;
         private string curRecordFileName = null;
         Size lastClientSize;
+
         public VideoPlayer()
         {
             InitializeComponent();
@@ -138,7 +142,8 @@ namespace x64AccordTestApp
 
         public Bitmap TakeSnapshot(string file, bool isNeedReturenSnapshot)
         {
-            Bitmap singleFrame = this.GetCurrentVideoFrame();
+            //Bitmap singleFrame = this.GetCurrentVideoFrame();
+            Bitmap singleFrame = buffer[10];
             if (singleFrame == null)
             {
                 MessageBox.Show("请检查摄像头是否连接正常!");
@@ -239,6 +244,12 @@ namespace x64AccordTestApp
 
         private void videoSourcePlayer_NewFrame(object sender, ref Bitmap image)
         {
+            
+            if (isCaching)
+            {
+                buffer.PushBack((Bitmap)image.Clone());
+            }
+
             if (isRecording)
             {
                 DateTime now = DateTime.Now;

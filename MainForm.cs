@@ -13,6 +13,8 @@ namespace x64AccordTestApp
 {
     public partial class MainForm : Form
     {
+
+        static int count = 0;
         //视频播放器控件
         VideoPlayer videoPlayer = null;
         Panel snapShotPanel = null;
@@ -36,6 +38,7 @@ namespace x64AccordTestApp
         private void InitVideoPlayer()
         {
             videoPlayer = new VideoPlayer();
+            videoPlayer.isCaching = true;
             videoPlayer.Location = new Point(10, 10);
             videoPlayer.Size = new Size(640, 360);
             videoPlayer.Show();
@@ -47,7 +50,6 @@ namespace x64AccordTestApp
             string cameraStr = EnumerateVideoDevices();
             //list all the camera devices
             videoPlayer.PlayVideo(cameraStr);
-            //videoPlayer.PlayVideo("Microsoft® LifeCam HD-3000");
         }
 
         private void btnTakePicture_Click(object sender, EventArgs e)
