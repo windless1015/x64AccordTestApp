@@ -101,6 +101,10 @@ namespace x64AccordTestApp
                 {
                     frameSize = new Size(640, 360);
                 }
+                else if (inputStr == "HP TrueVision HD Camera")
+                {
+                    frameSize = new Size(640, 360);
+                }
                 isPlaying = true;
             }
             else if (vt == VideoType.MJPEG)
@@ -124,7 +128,9 @@ namespace x64AccordTestApp
             _firstFrameTime = null;
             aviWriter = new VideoFileWriter();
             //最后一个参数是码率, bitrate,可以调节来控制视频质量
-            aviWriter.Open(aviSavedFile, frameSize.Width, frameSize.Height, 25, VideoCodec.H264, 2000 * 1000);
+            //aviWriter.Open(aviSavedFile, frameSize.Width, frameSize.Height, 25, VideoCodec.H264, 2000 * 1000);
+            //HP TrueVision HD Camera
+            aviWriter.Open(aviSavedFile, frameSize.Width, frameSize.Height, 30, VideoCodec.H264, 1000 * 1000);
             isRecording = true;
         }
 
@@ -324,40 +330,6 @@ namespace x64AccordTestApp
                 return VideoType.UNKNOWN;
         }
 
-
-        //双击播放器区域
-        private void VideoPlayer_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            if (curVideoSourceType != 2) //牙周的时候才会有窗口大小的变化
-                return;
-            //判断当前是大, 中, 小
-            Size curClientSize = this.ClientSize;
-            if (curClientSize.Width > 600)
-            {
-                this.ClientSize = new Size(600, 600);
-                this.Location = new Point(60 + 400, 135 + 94);
-            }
-            else if (curClientSize.Width == 600)
-            {
-                if (lastClientSize.Width > 600)
-                {
-                    this.ClientSize = new Size(400, 400);
-                    this.Location = new Point(60 + 500, 135 + 194);
-                }
-                else
-                {
-                    this.ClientSize = new Size(1400, 788);
-                    this.Location = new Point(60, 135);
-                }
-
-            }
-            else
-            {
-                this.ClientSize = new Size(600, 600);
-                this.Location = new Point(60 + 400, 135 + 94);
-            }
-            lastClientSize = curClientSize;
-        }
 
     }
 }

@@ -69,7 +69,8 @@ namespace x64AccordTestApp
             if (videoPlayer.isPlaying && !videoPlayer.isRecording)
             {
                 string dateTime = DateTime.Now.ToString("yyyyMMddHHmmss");
-                string aviFileName = Environment.CurrentDirectory + "\\" + dateTime + ".avi";
+                //string aviFileName = Environment.CurrentDirectory + "\\" + dateTime + ".avi";
+                string aviFileName = Environment.CurrentDirectory + "\\" + dateTime + ".mp4";
                 videoPlayer.StartRecord(aviFileName);
                 btnRecord.Text = "正在录制";
             }

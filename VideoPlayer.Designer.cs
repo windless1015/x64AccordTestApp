@@ -35,7 +35,6 @@ namespace x64AccordTestApp
             // VideoPlayer
             // 
             this.BackColor = System.Drawing.Color.Gray;
-            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.VideoPlayer_MouseDoubleClick);
             this.ResumeLayout(false);
         }
 
